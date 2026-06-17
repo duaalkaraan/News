@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "الرئيسية";
+}
+
+<!-- Hero Section -->
+<div class="hero-section text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">📰 بوابة ornek الإخبارية</h1>
+        <p class="lead mb-4">تابع آخر الأخبار وشارك خبرك مع العالم.</p>
+        <a asp-controller="News" asp-action="Index" class="btn btn-light btn-lg px-5 fw-bold">
+            اذهب للأخبار ←
+        </a>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="container mb-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="feature-card p-4">
+                <div class="feature-icon">📢</div>
+                <h5 class="fw-bold mt-3">شارك خبرك</h5>
+                <p class="text-muted">اكتب خبرك وانشره فوراً.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-4">
+                <div class="feature-icon">🔍</div>
+                <h5 class="fw-bold mt-3">ابقَ على اطلاع</h5>
+                <p class="text-muted">تابع آخر الأخبار من مكان واحد.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-4">
+                <div class="feature-icon">⚡</div>
+                <h5 class="fw-bold mt-3">سريع وسهل</h5>
+                <p class="text-muted">واجهة بسيطة وسهلة الاستخدام.</p>
+            </div>
+        </div>
+    </div>
+</div>

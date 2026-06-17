@@ -1,0 +1,23 @@
+﻿@model ornek.Models.News
+<div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header border-0">
+<h5 class="modal-title fw-bold text-danger">تاكيد الحذف</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body text-center py-4">
+<p>هل انت متاكدة من حذف هذا الخبر؟</p>
+<p class="fw-bold">@Model.Title</p>
+</div>
+<div class="modal-footer border-0 justify-content-center gap-3">
+<button type="button" class="btn btn-outline-secondary px-4"
+data-bs-dismiss="modal">الغاء</button>
+<form asp-action="Delete" method="post">
+<input type="hidden" asp-for="Id" />
+<button type="submit" class="btn btn-danger px-4">نعم احذف</button>
+</form>
+</div>
+</div>
+</div>
+</div>

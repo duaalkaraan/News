@@ -1,0 +1,33 @@
+﻿@model ornek.Models.News
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold">✏️ إضافة خبر جديد</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form asp-action="Create" method="post">
+            <div class="modal-body pt-2">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">العنوان</label>
+                    <input asp-for="Title" class="form-control form-control-lg"
+                           placeholder=" عنوان الخبر..." />
+                          <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">المحتوى</label>
+                    <textarea asp-for="Content" class="form-control" rows="5"
+                              placeholder=" تفاصيل الخبر..."></textarea>
+                              <span class="text-danger" asp-validation-for="Content" ></span>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <a type="button" asp-action="Index" asp-controller="News" >
+                    إلغاء
+                </a>
+                <button type="submit" class="btn btn-dark px-4">
+                    نشر الخبر ✓
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
