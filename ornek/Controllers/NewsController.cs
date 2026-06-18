@@ -8,7 +8,7 @@ namespace ornek.Controllers
 {
     public class NewsController(AppDbContext context) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> NewsList()
         {
             var newsList = await context.News
                 .Include(n => n.Category)
@@ -39,6 +39,7 @@ namespace ornek.Controllers
             {
                 if (image.Length > 0)
                 {
+                    
                     var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
                     var path = Path.Combine("wwwroot/images/news", fileName);
                     Directory.CreateDirectory("wwwroot/images/news");
@@ -46,7 +47,7 @@ namespace ornek.Controllers
                     using var stream = new FileStream(path, FileMode.Create);
                     await image.CopyToAsync(stream);
 
-                    context.NewsImages.Add(new NewsImage
+                    await context.NewsImages.AddAsync(new NewsImage
                     {
                         NewsId = news.Id,
                         ImagePath = "/images/news/" + fileName
@@ -63,9 +64,7 @@ namespace ornek.Controllers
         public async Task<IActionResult> Edit(int id, string title,
      string content, int categoryId, List<IFormFile>? newImages)
         {
-            if (string.IsNullOrWhiteSpace(title) ||
-                string.IsNullOrWhiteSpace(content) ||
-                categoryId == 0)
+            if (!ModelState.IsValid)
             {
                 TempData["Error"] = "يرجى تعبئة جميع الحقول المطلوبة";
                 return RedirectToAction("Index");

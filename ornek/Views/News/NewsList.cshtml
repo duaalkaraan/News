@@ -1,4 +1,4 @@
-﻿@model List<ornek.Models.News>
+﻿@model List<News>
 @using Microsoft.AspNetCore.Mvc.Rendering
 
 @{
@@ -200,7 +200,7 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">التصنيف</label>
                         <select name="CategoryId" class="form-select">
-                            <option value="">-- اختر التصنيف --</option>
+                            <option value="" >-- اختر التصنيف --</option>
                             @foreach (var cat in ViewBag.Categories as IEnumerable<SelectListItem>
                                                                                               ?? Enumerable.Empty<SelectListItem>())
                             {

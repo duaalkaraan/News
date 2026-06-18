@@ -17,6 +17,6 @@ namespace ornek.Models
         [Range(1, int.MaxValue, ErrorMessage = "التصنيف مطلوب")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-        public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
+        public ICollection<NewsImage>? Images { get; set; }
     }
 }
