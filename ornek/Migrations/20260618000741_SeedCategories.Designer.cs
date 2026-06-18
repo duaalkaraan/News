@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ornek.Data;
 
@@ -11,9 +12,11 @@ using ornek.Data;
 namespace ornek.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260618000741_SeedCategories")]
+    partial class SeedCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,28 +24,6 @@ namespace ornek.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("NewsImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NewsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NewsId");
-
-                    b.ToTable("NewsImages");
-                });
 
             modelBuilder.Entity("ornek.Models.Category", b =>
                 {
@@ -117,17 +98,6 @@ namespace ornek.Migrations
                     b.ToTable("News");
                 });
 
-            modelBuilder.Entity("NewsImage", b =>
-                {
-                    b.HasOne("ornek.Models.News", "News")
-                        .WithMany("Images")
-                        .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("News");
-                });
-
             modelBuilder.Entity("ornek.Models.News", b =>
                 {
                     b.HasOne("ornek.Models.Category", "Category")
@@ -142,11 +112,6 @@ namespace ornek.Migrations
             modelBuilder.Entity("ornek.Models.Category", b =>
                 {
                     b.Navigation("NewsList");
-                });
-
-            modelBuilder.Entity("ornek.Models.News", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

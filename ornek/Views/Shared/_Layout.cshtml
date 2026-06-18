@@ -7,33 +7,77 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+            /* الخط العام للموقع */
+            body {
+                font-family: 'Tajawal', sans-serif;
+                background-color: #f5f5f5;
+            }
+
+            /* الـ Navbar */
+            .navbar {
+                background-color: #1a1a2e !important;
+                border-bottom: 3px solid #e63946;
+            }
+
+            .navbar-brand {
+                font-size: 1.5rem;
+                color: white !important;
+            }
+
+            .nav-link {
+                color: #ccc !important;
+                font-size: 1rem;
+                margin: 0 5px;
+            }
+
+                /* لما تمرري فوق الرابط */
+                .nav-link:hover {
+                    color: white !important;
+                }
+
+            /* الـ Footer */
+            footer {
+                background-color: #1a1a2e !important;
+                border-top: 3px solid #e63946;
+            }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm">
-        <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">
+    <!-- الـ Navbar -->
+    <nav class="navbar navbar-expand-lg px-4 shadow-sm">
+        <!-- اسم الموقع -->
+        <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
             📰 ornek
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <!-- زر القائمة للموبايل -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- روابط الـ Navbar -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="Index">الرئيسية</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="News" asp-action="Index">الأخبار</a>
+                    <a class="nav-link" asp-controller="News" asp-action="Index">إدارة الأخبار</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <main class="py-4">
+    <!-- محتوى الصفحة -->
+    <main>
         @RenderBody()
     </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <!-- الـ Footer -->
+    <footer class="text-white text-center py-4 mt-5">
         <small>&copy; 2026 ornek — جميع الحقوق محفوظة.</small>
     </footer>
 

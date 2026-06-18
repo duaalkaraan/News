@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\News\Delete.cshtml" />
-    <Content Remove="Views\News\Edit.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Views\News\Delete.cshtml" />
-    <Compile Include="Views\News\Edit.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

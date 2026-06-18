@@ -1,5 +1,7 @@
 ﻿@model ornek.Models.News
-
+@{
+    Layout = null;
+}
 <div class="modal fade" id="editModal-@Model.Id" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -8,25 +10,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form asp-action="Edit" method="post">
-                <input type="hidden" asp-for="Id" />
+                <input type="hidden" name="id" value="@Model.Id" />
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-bold">العنوان</label>
-                        <input asp-for="Title" class="form-control form-control-lg" />
-                        <span class="text-danger" asp-validation-for="Title"></span>
+                        <input name="title" class="form-control form-control-lg"
+                               value="@Model.Title" required />
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">المحتوى</label>
-                        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
-                        <span class="text-danger" asp-validation-for="Content"></span>
+                        <textarea name="content" class="form-control"
+                                  rows="5" required>@Model.Content</textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-outline-secondary px-4"
-                            data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" class="btn btn-dark px-4">
-                        حفظ التعديلات ✓
+                            data-bs-dismiss="modal">
+                        إلغاء
                     </button>
+                    <button type="submit" class="btn btn-dark px-4">حفظ التعديلات ✓</button>
                 </div>
             </form>
         </div>

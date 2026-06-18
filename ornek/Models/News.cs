@@ -6,15 +6,17 @@ namespace ornek.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "title is required")]
+        [Required(ErrorMessage = "العنوان مطلوب")]
         public string Title { get; set; } = null!;
 
-        [Required(ErrorMessage = "content is required")]
+        [Required(ErrorMessage = "المحتوى مطلوب")]
         public string Content { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "التصنيف مطلوب")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
+        public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
     }
 }

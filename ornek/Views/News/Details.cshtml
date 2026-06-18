@@ -1,0 +1,50 @@
+﻿@model ornek.Models.News
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container my-5">
+
+    <!-- زر الرجوع -->
+    <a asp-controller="Home" asp-action="Index"
+           class="btn btn-outline-dark mb-4">
+        ← رجوع للرئيسية
+    </a>
+
+    <div class="bg-white rounded-3 shadow-sm p-4">
+
+        <!-- التصنيف والعنوان -->
+        <span class="badge mb-2" style="background:#e63946">
+            @Model.Category?.Name
+        </span>
+        <h2 class="fw-bold mb-3">@Model.Title</h2>
+
+        <!-- التاريخ -->
+        <div class="text-muted small mb-4">
+            🕒 @Model.CreatedAt.ToString("dd/MM/yyyy — HH:mm")
+        </div>
+
+        <!-- كل الصور -->
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            <div class="row g-2 mb-4">
+                @foreach (var img in Model.Images)
+                {
+                    <div class="col-md-4">
+                        <!-- كل صورة بعمود -->
+                        <img src="@img.ImagePath"
+                             class="img-fluid rounded-3"
+                             style="width:100%; height:200px; object-fit:cover;" />
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- محتوى الخبر -->
+        <p style="font-size:1.05rem; line-height:1.9; color:#333;">
+            @Model.Content
+        </p>
+
+    </div>
+</div>

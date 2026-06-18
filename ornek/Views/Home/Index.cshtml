@@ -1,41 +1,161 @@
-﻿@{
+﻿@model List<ornek.Models.Category>
+
+@{
     ViewData["Title"] = "الرئيسية";
 }
 
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 70px 0;
+        color: white;
+        text-align: center;
+    }
+
+    /* بطاقة التصنيف الكاملة */
+    .category-section {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        height: 100%;
+    }
+
+    /* عنوان التصنيف */
+    .category-header {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        border-bottom: 2px solid #e63946;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* كل خبر داخل التصنيف */
+    .news-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.2s;
+    }
+
+        /* آخر خبر — بدون خط تحته */
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item:hover {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding-right: 8px;
+        }
+
+    /* عنوان الخبر */
+    .news-item-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+    }
+
+    /* تاريخ الخبر */
+    .news-item-date {
+        font-size: 0.75rem;
+        color: #aaa;
+    }
+
+    /* عداد عدد الأخبار */
+    .category-badge {
+        background: #e63946;
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-left: 8px;
+    }
+</style>
+
 <!-- Hero Section -->
-<div class="hero-section text-white text-center py-5 mb-5">
+<div class="hero-section">
     <div class="container">
-        <h1 class="display-4 fw-bold mb-3">📰 بوابة ornek الإخبارية</h1>
-        <p class="lead mb-4">تابع آخر الأخبار وشارك خبرك مع العالم.</p>
-        <a asp-controller="News" asp-action="Index" class="btn btn-light btn-lg px-5 fw-bold">
-            اذهب للأخبار ←
-        </a>
+        <h1 class="display-5 fw-bold mb-3">📰 بوابة ornek الإخبارية</h1>
+        <p class="lead mb-4 text-white-50">تابع آخر الأخبار من مختلف التصنيفات</p>
     </div>
 </div>
 
-<!-- Features -->
-<div class="container mb-5">
-    <div class="row g-4 text-center">
-        <div class="col-md-4">
-            <div class="feature-card p-4">
-                <div class="feature-icon">📢</div>
-                <h5 class="fw-bold mt-3">شارك خبرك</h5>
-                <p class="text-muted">اكتب خبرك وانشره فوراً.</p>
-            </div>
+<!-- الأخبار حسب التصنيف -->
+<div class="container my-5">
+
+    <!-- عنوان القسم -->
+    <h4 class="fw-bold text-center mb-4">
+        الأخبار حسب التصنيف
+        <div style="width:60px; height:3px; background:#e63946; margin:8px auto 0;"></div>
+    </h4>
+
+    @* لو ما في أخبار *@
+    @if (!Model.Any(c => c.NewsList != null && c.NewsList.Any()))
+    {
+        <div class="text-center py-5">
+            <div style="font-size:60px">📭</div>
+            <h5 class="mt-3 text-muted">لا توجد أخبار بعد</h5>
+            <a asp-controller="News" asp-action="Index" class="btn btn-dark mt-3">
+                أضف أول خبر
+            </a>
         </div>
-        <div class="col-md-4">
-            <div class="feature-card p-4">
-                <div class="feature-icon">🔍</div>
-                <h5 class="fw-bold mt-3">ابقَ على اطلاع</h5>
-                <p class="text-muted">تابع آخر الأخبار من مكان واحد.</p>
-            </div>
+    }
+    else
+    {
+        <!-- التصنيفات بجانب بعض — 3 بكل صف -->
+        <div class="row g-3">
+            @foreach (var category in Model)
+            {
+                @if (category.NewsList != null && category.NewsList.Any())
+                {
+                    <div class="col-md-4">
+                        <div class="category-section">
+
+                            <!-- عنوان التصنيف مع عداد الأخبار -->
+                            <div class="category-header">
+                                @category.Name
+                                <span class="category-badge">@category.NewsList.Count()</span>
+                            </div>
+
+                            <!-- أول 4 أخبار من التصنيف -->
+                            @foreach (var news in category.NewsList.Take(4))
+                            {
+                                <!-- الضغط على الخبر يروح لصفحة التفاصيل -->
+                                <a asp-controller="News" asp-action="Details"
+                                       asp-route-id="@news.Id"
+                                       class="text-decoration-none">
+                                    <div class="news-item">
+
+                                        <!-- أول صورة للخبر  -->
+                                        @if (news.Images != null && news.Images.Any())
+                                        {
+                                            <img src="@news.Images.First().ImagePath"
+                                                 class="rounded mb-2"
+                                                 style="width:100%; height:120px; object-fit:cover;" />
+                                        }
+
+                                        <!-- عنوان الخبر -->
+                                        <div class="news-item-title">@news.Title</div>
+
+                                        <!-- التاريخ -->
+                                        <div class="news-item-date">
+                                            🕒 @news.CreatedAt.ToString("dd/MM/yyyy")
+                                        </div>
+
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                    </div>
+                }
+            }
         </div>
-        <div class="col-md-4">
-            <div class="feature-card p-4">
-                <div class="feature-icon">⚡</div>
-                <h5 class="fw-bold mt-3">سريع وسهل</h5>
-                <p class="text-muted">واجهة بسيطة وسهلة الاستخدام.</p>
-            </div>
-        </div>
-    </div>
+    }
 </div>

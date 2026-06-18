@@ -1,25 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
-using ornek.Models;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using ornek.Data;
 
 namespace ornek.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(AppDbContext context) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var categories = await context.Categories
+                .Include(c => c.NewsList)
+                .ThenInclude(n => n.Images)
+                .ToListAsync();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-     
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(categories);
         }
     }
 }

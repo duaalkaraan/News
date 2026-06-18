@@ -3,18 +3,13 @@ using ornek.Models;
 
 namespace ornek.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
-
         public DbSet<News> News { get; set; }
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<NewsImage> NewsImages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Seed Data 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "سياسة" },
                 new Category { Id = 2, Name = "رياضة" },
