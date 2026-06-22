@@ -1,4 +1,22 @@
 ﻿@model ornek.Models.Category
+
+<div class="card shadow-sm border-danger">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">تأكيد الحذف</h5>
+    </div>
+    <div class="card-body">
+        <p>هل تريدي حذف التصنيف: <strong>@Model.Name</strong>؟</p>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">حذف</button>
+            <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+        </form>
+    </div>
+</div>
+
+
+
+@* @model ornek.Models.Category
 <h2>هل تريد حذف هذا التصنيف؟ </h2>
 <p>@Model.Name</p>
 
@@ -6,4 +24,4 @@
     <input type="hidden" asp-for="Id" />
     <button type="submit">حذف</button>
     <a asp-area="Admin" asp-controller="Category" asp-action="Index">إلغاء</a>
-</form>
+</form> *@

@@ -1,5 +1,27 @@
 ﻿@model ornek.Models.Category
 
+<div class="card shadow-sm">
+    <div class="card-header bg-warning">
+        <h5 class="mb-0">تعديل تصنيف</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">الاسم</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-warning">حفظ</button>
+            <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+        </form>
+    </div>
+</div>
+
+
+
+
+@* @model ornek.Models.Category
 <h2>تعديل التصنيف</h2>
 
 <form asp-action="Edit" method="post">
@@ -10,4 +32,4 @@
         </div>
     <button type="submit">حفظ</button>
 </form>
-<a asp-area="Admin" asp-controller="Category" asp-action="Index">العودة إلى القائمة </a>
+<a asp-area="Admin" asp-controller="Category" asp-action="Index">العودة إلى القائمة </a> *@
