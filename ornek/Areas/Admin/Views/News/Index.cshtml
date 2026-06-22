@@ -1,0 +1,34 @@
+﻿@model List<ornek.Models.News>
+
+<h2>الأخبار</h2>
+
+<a asp-area="Admin" asp-controller="News" asp-action="Create">إضافة خبر جديد</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>الرقم</th>
+            <th>العنوان</th>
+            <th>التصنيف</th>
+            <th>المحتوى</th>
+            <th>التاريخ</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var news in Model)
+        {
+            <tr>
+                <td>@news.Id</td>
+                <td>@news.Title</td>
+                <td>@news.Category?.Name</td>
+                <td>@news.Content</td>
+                <td>@news.CreatedAt.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@news.Id">تعديل</a>
+                    <a asp-action="Delete" asp-route-id="@news.Id">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

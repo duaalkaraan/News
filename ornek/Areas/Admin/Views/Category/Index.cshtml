@@ -1,0 +1,26 @@
+﻿@model List<ornek.Models.Category>
+
+
+<h2>التصنيفات</h2>
+<a asp-area="Admin" asp-controller="Category" asp-action="Create">إضافة تصنيف جديد</a>
+<table>
+    <tr>
+        <td>الرقم</td>
+        <td>الاسم</td>
+        <td>الاجراءات</td>
+
+    </tr>
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.Id</td>
+            <td>@category.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@category.Id">تعديل</a>
+                <a asp-action="Delete" asp-route-id="@category.Id">حذف</a>
+            </td>
+        </tr>
+    }
+
+</table>
+

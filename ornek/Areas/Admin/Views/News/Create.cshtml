@@ -1,0 +1,32 @@
+﻿@model ornek.ViewModels.NewsViewModel
+
+<h2>إضافة خبر جديد</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="News.Title">العنوان</label>
+        <input asp-for="News.Title" />
+        <span asp-validation-for="News.Title"></span>
+    </div>
+
+    <div>
+        <label asp-for="News.Content">المحتوى</label>
+        <textarea asp-for="News.Content"></textarea>
+        <span asp-validation-for="News.Content"></span>
+    </div>
+
+
+    <div>
+        <label asp-for="News.CategoryId">التصنيف</label>
+        <select asp-for="News.CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))"></select>
+        <span asp-validation-for="News.CategoryId"></span>
+    </div>
+
+
+
+    <div>
+        <label>الصور</label>
+        <input type="file" name="Images" multiple />
+    </div>
+    <button type="submit">حفظ</button>
+</form>

@@ -1,0 +1,104 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ornek.Data;
+using ornek.Models;
+
+
+namespace ornek.Services
+{
+
+    public class NewsService
+    {
+        private readonly AppDbContext _context;
+       
+        public NewsService(AppDbContext context)        //dependency injection
+        {
+            _context = context;
+        }
+         
+       public List<News> GetAllNews()
+        {
+            return _context.News.Include(n=> n.Category).Include(n => n.Images).ToList();
+
+        }
+         public News? GetById(int id)
+        {
+            return  _context.News.Include(n=> n.Category).Include(n=> n.Images).FirstOrDefault(n=> n.Id == id);
+
+        }
+
+        public void Delete(int id)
+        {
+            var news = GetById(id);
+            if(news != null)
+            {
+                _context.News.Remove(news);
+                _context.SaveChanges();
+            }
+        }
+
+
+
+        public void Create(News news, List<IFormFile>? images)
+        {
+            news.CreatedAt = DateTime.Now;
+            _context.News.Add(news);
+            _context.SaveChanges();
+
+            if(images != null)
+            {
+                 foreach(var image in images)
+                 {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    var path = Path.Combine("wwwroot/images/news", fileName);
+                    using (var stream = new FileStream(path,FileMode.Create))
+                    {
+                        image.CopyTo(stream);
+                    }
+                    _context.NewsImages.Add(new NewsImage
+                    {
+                        ImagePath = "/images/news/" + fileName,
+                        NewsId = news.Id
+                    });
+                 }
+                _context.SaveChanges();
+            }
+        }
+
+        public void Update(News news, List<IFormFile>? images)
+        {
+            var existing = GetById(news.Id)!;
+            existing.Title = news.Title;
+            existing.Content = news.Content;
+            existing.CategoryId = news.CategoryId;
+            _context.SaveChanges();
+
+            if (images != null)
+            {
+                foreach (var image in images)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    var path = Path.Combine("wwwroot/images/news", fileName);
+                    using (var stream = new FileStream(path,FileMode.Create))
+                    {
+                        image.CopyTo(stream);
+                    }
+                    _context.NewsImages.Add(new NewsImage
+                    {
+                        ImagePath = "/images/news/" + fileName,
+                        NewsId = news.Id
+                    });
+                }
+
+                _context.SaveChanges();
+
+
+            }
+
+
+        }
+
+
+
+
+    }
+}

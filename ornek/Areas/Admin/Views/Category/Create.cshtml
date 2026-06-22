@@ -1,0 +1,13 @@
+﻿@model ornek.Models.Category
+
+<h2>إضافة تصنيف جديد</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Name">الاسم</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <button type="submit">حفظ</button>
+</form>
+<a asp-area="Admin" asp-controller="Category" asp-action="Index">العودة إلى قائمة التصنيفات</a>

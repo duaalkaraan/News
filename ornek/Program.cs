@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ornek.Data;
+using ornek.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+    builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<NewsService>();
+
 
 var app = builder.Build();
 
@@ -24,6 +28,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

@@ -1,0 +1,9 @@
+﻿@model ornek.Models.Category
+<h2>هل تريد حذف هذا التصنيف؟ </h2>
+<p>@Model.Name</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">حذف</button>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Index">إلغاء</a>
+</form>
