@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ornek.Services;
+using ornek.IServices;
 using ornek.Models;
+using ornek.Services;
 using ornek.ViewModels;
 
 namespace ornek.Areas.Admin.Controllers
@@ -11,13 +12,13 @@ namespace ornek.Areas.Admin.Controllers
     {
 
         private readonly NewsService _newsService;
-        private readonly CategoryService _categoryService;
+        private readonly ICategoryService categoryService;
 
 
-        public NewsController(NewsService newsService, CategoryService categoryService)
+        public NewsController(NewsService newsService, ICategoryService categoryService)
         {
             _newsService = newsService;
-            _categoryService = categoryService;
+            categoryService = categoryService;
         }
 
    
@@ -34,7 +35,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             var viewModel = new NewsViewModel
             {
-                Categories = _categoryService.GetAllCategories()
+                Categories = categoryService.GetAllCategories()
             };
 
             return View(viewModel);
@@ -47,7 +48,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             if(!ModelState.IsValid)
             {
-                viewModel.Categories = _categoryService.GetAllCategories();
+                viewModel.Categories = categoryService.GetAllCategories();
                 return View(viewModel);
             }
             _newsService.Create(viewModel.News, viewModel.Images);
@@ -61,7 +62,7 @@ namespace ornek.Areas.Admin.Controllers
             var viewModel = new NewsViewModel
             {
                 News = news!,
-                Categories = _categoryService.GetAllCategories()
+                Categories = categoryService.GetAllCategories()
             };
             return View(viewModel);
         }
@@ -70,7 +71,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Categories = _categoryService.GetAllCategories();
+                viewModel.Categories = categoryService.GetAllCategories();
                 return View(viewModel);
             }
             _newsService.Update(viewModel.News, viewModel.Images);

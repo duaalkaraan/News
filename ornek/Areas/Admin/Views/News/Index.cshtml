@@ -1,11 +1,11 @@
-﻿@model List<ornek.Models.News>
+﻿@model List<GetAllNewsDto>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>الأخبار</h2>
     <a asp-area="Admin" asp-controller="News" asp-action="Create" class="btn btn-primary">+ إضافة خبر جديد</a>
 </div>
 
-<table class="table table-bordered table-hover">
+@* <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
             <th>#</th>
@@ -50,6 +50,58 @@
             </tr>
         }
     </tbody>
+</table> *@
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>العنوان</th>
+            <th>المحتوى</th>
+            <th>التصنيف</th>
+            <th>التاريخ</th>
+            <th>الصور</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var news in Model)
+        {
+            <tr>
+                <td>@news.Id</td>
+                <td>
+                    <a href="#" class="text-decoration-none"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modal-@news.Id">
+                        @news.Title
+                    </a>
+                </td>
+                <td>
+                   @news.Content.Substring(0,30)...
+                </td>
+                <td><span class="badge bg-secondary">@news.CategoryName</span></td>
+                <td>@news.CreatedAt.ToShortDateString()</td>
+                <td>
+                    @if (news.Images != null && news.Images.Any())
+                    {
+                        @foreach (var img in news.Images.Take(2))
+                        {
+                            <img src="@img" width="50" height="50" class="rounded me-1 object-fit-cover" />
+                        }
+                        @if (news.Images.Count > 2)
+                        {
+                            <span class="badge bg-primary">+@(news.Images.Count - 2)</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@news.Id" class="btn btn-sm btn-warning">تعديل</a>
+                    <a asp-action="Delete" asp-route-id="@news.Id" class="btn btn-sm btn-danger">حذف</a>
+                </td>
+            </tr>
+        }
+       
+    </tbody>
 </table>
 
 
@@ -69,7 +121,7 @@
                         {
                             @foreach (var img in news.Images)
                             {
-                                <img src="@img.ImagePath" width="150" height="150" class="rounded object-fit-cover" />
+                                <img src="@img" width="150" height="150" class="rounded object-fit-cover" />
                             }
                         }
                     </div>

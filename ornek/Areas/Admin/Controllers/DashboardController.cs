@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ornek.IServices;
 using ornek.Services;
 
 namespace ornek.Areas.Admin.Controllers
@@ -7,18 +8,18 @@ namespace ornek.Areas.Admin.Controllers
     public class DashboardController : Controller
     {
         private readonly NewsService _newsService;
-        private readonly CategoryService _categoryService;
+        private readonly ICategoryService categoryService;
 
-        public DashboardController(NewsService newsService, CategoryService categoryService)
+        public DashboardController(NewsService newsService, ICategoryService categoryService)
         {
             _newsService = newsService;
-            _categoryService = categoryService;
+            categoryService = categoryService;
         }
 
         public IActionResult Index()
         {
             ViewBag.NewsCount = _newsService.GetAllNews().Count;
-            ViewBag.CategoryCount = _categoryService.GetAllCategories().Count;
+            ViewBag.CategoryCount = 0; //(categoryService.GetAllCategories()).Count;
             return View();
         }
     }

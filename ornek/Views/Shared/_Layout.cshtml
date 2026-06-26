@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
@@ -84,8 +84,66 @@
         <small>&copy; 2026 ornek — جميع الحقوق محفوظة.</small>
     </footer> *@
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+ @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+ *@
+ 
+ 
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ornek</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+
+
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-expand-lg px-4">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        ornek
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">الرئيسية</a>
+
+            </li>
+                <li class="nav-item">
+                    <a class="btn px-4 py-2 ms-3"
+                           style="background-color: var(--blue-main); color: white; border-radius: 20px;"
+                           asp-controller="Account" asp-action="Login"> تسجيل الدخول </a>
+                </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    @RenderBody()
+</main>
+
+<footer class="text-white text-center py-4 mt-5">
+    <small>&copy; 2026 ornek — جميع الحقوق محفوظة.</small>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

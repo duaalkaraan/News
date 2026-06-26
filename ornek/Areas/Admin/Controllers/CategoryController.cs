@@ -1,20 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ornek.Services;
 using ornek.Models;
+using ornek.IServices;
 
 namespace ornek.Areas.Admin.Controllers
 {
     [Area ("Admin")]
-    public class CategoryController : Controller
+    public class CategoryController(ICategoryService categoryService) : Controller
     {
-        private readonly CategoryService _categoryService;
-        public CategoryController(CategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
+        
         public IActionResult Index()
         {
-            var categories = _categoryService.GetAllCategories();
+            var categories = categoryService.GetAllCategories();
             return View(categories);
         }
 
@@ -29,13 +26,13 @@ namespace ornek.Areas.Admin.Controllers
             {
                 return View(category);
             }
-            _categoryService.Create(category);
+            categoryService.Create(category);
             return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int id)
         {
-            var category = _categoryService.GetById(id);
+            var category = categoryService.GetById(id);
             return View(category);
         }
         [HttpPost]
@@ -45,19 +42,19 @@ namespace ornek.Areas.Admin.Controllers
             {
                 return View(category);
             }
-            _categoryService.Update(category);
+            categoryService.Update(category);
             return RedirectToAction("Index");
         }
         
         public IActionResult Delete(int id)
         {
-           var category = _categoryService.GetById(id);
+           var category = categoryService.GetById(id);
            return View(category);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _categoryService.Delete(id);
+            categoryService.Delete(id);
             return RedirectToAction("Index");
         }
 

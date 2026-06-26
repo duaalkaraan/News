@@ -1,9 +1,10 @@
 ﻿using ornek.Data;
+using ornek.IServices;
 using ornek.Models;
 
 namespace ornek.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly AppDbContext _context;
         public CategoryService(AppDbContext context)

@@ -4,7 +4,135 @@
     ViewData["Title"] = "الرئيسية";
 }
 
-<style>
+
+
+<div class="container my-5">
+    <div class="featured-grid">
+
+        @* الخبر الكبير — أول تصنيف عنده أخبار *@
+        @{
+            var firstCategory = Model.FirstOrDefault(c => c.NewsList != null && c.NewsList.Any());
+            var featuredNews = firstCategory?.NewsList.First();
+        }
+
+        @if (featuredNews != null)
+        {
+            <a asp-controller="News" asp-action="Details"
+                   asp-route-id="@featuredNews.Id"
+                   class="featured-main text-decoration-none">
+                <img src="@featuredNews.Images?.FirstOrDefault()?.ImagePath" />
+                <div class="featured-overlay">
+                    <span class="featured-tag">@firstCategory.Name</span>
+                    <div class="featured-title">@featuredNews.Title</div>
+                    <div class="featured-date">@featuredNews.CreatedAt.ToString("dd/MM/yyyy")</div>
+                </div>
+            </a>
+        }
+
+        @* الأخبار الصغيرة — باقي التصنيفات *@
+        <div class="featured-side">
+            @foreach (var category in Model.Skip(1).Take(3))
+            {
+                @if (category.NewsList != null && category.NewsList.Any())
+                {
+                    var news = category.NewsList.First();
+                    <a asp-controller="News" asp-action="Details"
+                           asp-route-id="@news.Id"
+                           class="featured-small text-decoration-none">
+                        @if (news.Images != null && news.Images.Any())
+                        {
+                            <img src="@news.Images.First().ImagePath" />
+                        }
+                        else
+                        {
+                            <div class="featured-no-img"></div>
+                        }
+                        <div class="featured-overlay">
+                            <span class="featured-tag">@category.Name</span>
+                            <div class="featured-title">@news.Title</div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<div class="container my-5">
+    <h4 class="section-title">الأخبار حسب التصنيف</h4>
+
+    @if (!Model.Any(c => c.NewsList != null && c.NewsList.Any()))
+    {
+        <div class="text-center py-5">
+            <h5 class="text-muted">لا توجد أخبار بعد</h5>
+            <a asp-controller="News" asp-action="NewsList" class="btn mt-3"
+                   style="background-color: var(--blue-main); color: white;">
+                أضف أول خبر
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var category in Model)
+            {
+                @if (category.NewsList != null && category.NewsList.Any())
+                {
+                    <div class="col-md-4">
+                        <div class="category-card">
+                            <div class="category-card-header">
+                                @category.Name
+                                <span class="category-count">@category.NewsList.Count()</span>
+                            </div>
+                            @foreach (var news in category.NewsList.Take(4))
+                            {
+                                <a asp-controller="News" asp-action="Details"
+                                       asp-route-id="@news.Id"
+                                       class="news-item-link">
+                                    <div class="news-item">
+                                        @if (news.Images != null && news.Images.Any())
+                                        {
+                                            <img src="@news.Images.First().ImagePath"
+                                                 class="news-item-img"
+                                                 alt="@news.Title" />
+                                        }
+                                        <div class="news-item-content">
+                                            <div class="news-item-title">@news.Title</div>
+                                            <div class="news-item-date">@news.CreatedAt.ToString("dd/MM/yyyy")</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <style>
     /* Hero Section */
     .hero-section {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -95,7 +223,7 @@
         <div style="width:60px; height:3px; background:#e63946; margin:8px auto 0;"></div>
     </h4>
 
-    @* لو ما في أخبار *@
+    @* لو ما في أخبار *
     @if (!Model.Any(c => c.NewsList != null && c.NewsList.Any()))
     {
         <div class="text-center py-5">
@@ -159,3 +287,4 @@
         </div>
     }
 </div>
+ *@

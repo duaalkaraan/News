@@ -9,8 +9,7 @@ namespace ornek.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await context.Categories
-                .Include(c => c.NewsList)
-                .ThenInclude(n => n.Images)
+                .Include(c => c.NewsList.OrderByDescending(n => n.CreatedAt)).ThenInclude(n => n.Images)
                 .ToListAsync();
 
             return View(categories);

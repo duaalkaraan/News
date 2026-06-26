@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ornek.Data;
+using ornek.IServices;
 using ornek.Services;
 
 
@@ -8,7 +9,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-    builder.Services.AddScoped<CategoryService>();
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<NewsService>();
 
 

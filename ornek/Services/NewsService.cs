@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ornek.Data;
+using ornek.Dtos.News;
 using ornek.Models;
 
 
@@ -15,9 +16,19 @@ namespace ornek.Services
             _context = context;
         }
          
-       public List<News> GetAllNews()
+       public List<GetAllNewsDto> GetAllNews()
         {
-            return _context.News.Include(n=> n.Category).Include(n => n.Images).ToList();
+            return _context.News.Include(n=> n.Category).Include(n => n.Images)
+                .Select(x=> new GetAllNewsDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(x=> x.ImagePath).ToList()
+                })
+                .ToList();
 
         }
          public News? GetById(int id)
