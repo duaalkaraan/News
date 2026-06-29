@@ -5,28 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لوحة التحكم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-</head>
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="row">
-            @* Sidebar *@
-            <div class="col-2 bg-dark min-vh-100 p-0">
-                <div class="text-white fw-bold fs-5 p-3 border-bottom border-danger">
-                    ⚙️ لوحة التحكم
-                </div>
-                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="d-block text-white-50 p-3 text-decoration-none border-bottom">🏠Dashboard </a>
-                <a asp-area="Admin" asp-controller="News" asp-action="Index" class="d-block text-white-50 p-3 text-decoration-none border-bottom">📰 الأخبار</a>
-                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="d-block text-white-50 p-3 text-decoration-none border-bottom">📁 التصنيفات</a>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="d-block text-white-50 p-3 text-decoration-none border-bottom">🌐 الصفحة الرئيسية</a>
-            </div>
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="~/css/admin-style.css" asp-append-version="true" />
 
-            @* content *@
-            <div class="col-10 p-4">
-                @RenderBody()
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</head>
+<body>
+    <div class="admin-container">
+        <!-- القائمة الجانبية -->
+        <nav class="admin-sidebar">
+            <div class="text-center mb-4">
+                <h4>لوحة التحكم</h4>
+                <hr />
             </div>
-        </div>
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home me-2"></i> الرئيسية
+            </a>
+            <a asp-area="Admin" asp-controller="News" asp-action="Index">
+                <i class="fas fa-newspaper me-2"></i> إدارة الأخبار
+            </a>
+            <a asp-area="Admin" asp-controller="Category" asp-action="Index">
+                <i class="fas fa-tags me-2"></i> التصنيفات
+            </a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-warning">
+                <i class="fas fa-arrow-right me-2"></i> الرئيسية
+            </a>
+        </nav>
+
+        <main class="admin-main-content">
+            @RenderBody()
+        </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,20 +1,34 @@
-﻿<h2 class="mb-4">مرحباً بك في لوحة التحكم 👋</h2>
+﻿<h2 class="section-title mb-4">مرحباً بك في لوحة التحكم </h2>
 
-<div class="row">
+<div class="row g-4">
     <div class="col-md-6">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-body">
-                <h5 class="card-title">📰 الأخبار</h5>
-                <p class="card-text fs-3">@ViewBag.NewsCount</p>
+        <a asp-area="Admin" asp-controller="News" asp-action="Index" class="text-decoration-none">
+            <div class="card border-0 shadow-sm rounded-3 p-4"
+                 style="border-right: 5px solid var(--blue-main) !important; background: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted mb-1" style="font-size: 0.9rem;">إجمالي الأخبار</div>
+                        <div class="fw-bold" style="font-size: 2rem; color: var(--blue-dark);">@ViewBag.NewsCount</div>
+                        <div class="mt-2" style="color: var(--blue-main); font-weight: 600;"> الأخبار</div>
+                    </div>
+                    <div style="font-size: 3rem; opacity: 0.15;"></div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-md-6">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-body">
-                <h5 class="card-title">📁 التصنيفات</h5>
-                <p class="card-text fs-3">@ViewBag.CategoryCount</p>
+        <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="text-decoration-none">
+            <div class="card border-0 shadow-sm rounded-3 p-4"
+                 style="border-right: 5px solid var(--blue-mid) !important; background: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted mb-1" style="font-size: 0.9rem;">إجمالي التصنيفات</div>
+                        <div class="fw-bold" style="font-size: 2rem; color: var(--blue-dark);">@ViewBag.CategoryCount</div>
+                        <div class="mt-2" style="color: var(--blue-mid); font-weight: 600;"> التصنيفات</div>
+                    </div>
+                    <div style="font-size: 3rem; opacity: 0.15;"></div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>

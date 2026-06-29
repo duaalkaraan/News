@@ -1,0 +1,41 @@
+﻿:root {
+    --sidebar-bg: #1a1c2e;
+    --sidebar-hover: #252844;
+    --accent-color: #e63946;
+    --text-muted: #adb5bd;
+    --bg-light: #f8f9fa;
+}
+
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+    .admin-sidebar a {
+        display: block;
+        color: var(--text-muted);
+        padding: 15px 25px;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+        .admin-sidebar a:hover {
+            background-color: var(--sidebar-hover);
+            color: white;
+            border-right: 4px solid var(--accent-color);
+        }
+
+.admin-main-content {
+    flex: 1;
+    padding: 40px;
+    background-color: var(--bg-light);
+}

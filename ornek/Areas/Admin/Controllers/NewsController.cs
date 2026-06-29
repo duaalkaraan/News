@@ -12,16 +12,16 @@ namespace ornek.Areas.Admin.Controllers
     {
 
         private readonly NewsService _newsService;
-        private readonly ICategoryService categoryService;
 
+
+        private readonly ICategoryService _categoryService;
 
         public NewsController(NewsService newsService, ICategoryService categoryService)
         {
             _newsService = newsService;
-            categoryService = categoryService;
+            _categoryService = categoryService;
         }
 
-   
 
 
         public IActionResult Index()
@@ -35,7 +35,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             var viewModel = new NewsViewModel
             {
-                Categories = categoryService.GetAllCategories()
+                Categories = _categoryService.GetAllCategories()
             };
 
             return View(viewModel);
@@ -48,7 +48,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             if(!ModelState.IsValid)
             {
-                viewModel.Categories = categoryService.GetAllCategories();
+                viewModel.Categories = _categoryService.GetAllCategories();
                 return View(viewModel);
             }
             _newsService.Create(viewModel.News, viewModel.Images);
@@ -62,7 +62,7 @@ namespace ornek.Areas.Admin.Controllers
             var viewModel = new NewsViewModel
             {
                 News = news!,
-                Categories = categoryService.GetAllCategories()
+                Categories = _categoryService.GetAllCategories()
             };
             return View(viewModel);
         }
@@ -71,7 +71,7 @@ namespace ornek.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Categories = categoryService.GetAllCategories();
+                viewModel.Categories = _categoryService.GetAllCategories();
                 return View(viewModel);
             }
             _newsService.Update(viewModel.News, viewModel.Images);

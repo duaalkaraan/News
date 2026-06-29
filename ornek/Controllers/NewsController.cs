@@ -16,9 +16,6 @@ namespace ornek.Controllers
                 .OrderByDescending(n => n.CreatedAt)
                 .ToListAsync();
 
-            ViewBag.Categories = new SelectList(
-                await context.Categories.ToListAsync(), "Id", "Name");
-
             return View(newsList);
         }
 
