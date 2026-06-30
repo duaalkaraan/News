@@ -9,7 +9,6 @@
 <div class="container my-5">
     <div class="featured-grid">
 
-        @* الخبر الكبير — أول تصنيف عنده أخبار *@
         @{
             var firstCategory = Model.FirstOrDefault(c => c.NewsList != null && c.NewsList.Any());
             var featuredNews = firstCategory?.NewsList.First();
@@ -29,7 +28,6 @@
             </a>
         }
 
-        @* الأخبار الصغيرة — باقي التصنيفات *@
         <div class="featured-side">
             @foreach (var category in Model.Skip(1).Take(3))
             {

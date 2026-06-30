@@ -16,6 +16,7 @@ namespace ornek.Dtos.News
 
         public List<string>? Images { get; set; }
         public string CategoryName { get; set; } = null!;
-        
+        public string Status { get; set; } = null!;
+
     }
 }

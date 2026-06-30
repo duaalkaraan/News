@@ -4,9 +4,79 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="register-wrapper">
+    <div class="glass-container">
 
-<div class="row">
+
+        
+        <div class="left-box">
+
+            <i class="bi bi-broadcast"
+                   style="font-size:80px; margin-bottom:30px; color:rgba(255,255,255,0.8)">
+            </i>
+
+            <div class="features">
+
+                <div class="feature-item">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>أخبار سريعة وموثوقة</span>
+                </div>
+
+                <div class="feature-item">
+                    <i class="bi bi-globe"></i>
+                    <span>تغطية شاملة لكافة الأحداث</span>
+                </div>
+
+                <div class="feature-item">
+                    <i class="bi bi-shield-check"></i>
+                    <span>محتوى موثوق ومحدث دائماً</span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="right-box">
+            <div class="user-icon">
+                <i class="bi bi-person"></i>
+            </div>
+
+            <h3>انشاء حساب</h3>
+
+            <form id="account" method="post" style="width:100%">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <input asp-for="Input.Email" placeholder="البريد الإلكتروني" />
+                <input asp-for="Input.Password" type="password" placeholder=" كلمة المرور" />
+                <input asp-for="Input.ConfirmPassword" type="password" placeholder="تأكيد كلمة المرور" />
+
+                <button type="submit"> تسجيل</button>
+
+
+            </form>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
@@ -60,7 +130,7 @@
             }
         </section>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

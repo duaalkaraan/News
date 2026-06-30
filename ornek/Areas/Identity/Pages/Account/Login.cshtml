@@ -9,8 +9,34 @@
     <div class="glass-container">
 
         <div class="left-box">
-            ffffff
+            <i class="bi bi-broadcast"
+                   style="font-size:80px; margin-bottom:30px; color:rgba(255,255,255,0.8)">
+                   </i>
+
+
+                <div class="features">
+
+
+                      
+                    <div class="feature-item">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        <span>أخبار سريعة وموثوقة</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="bi bi-globe"></i>
+                        <span>تغطية شاملة لكافة الأحداث</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="bi bi-shield-check"></i>
+                        <span>محتوى موثوق ومحدث دائماً</span>
+                    </div>
+               </div>
+  
         </div>
+
+
 
         <div class="right-box">
             <div class="user-icon">
@@ -18,9 +44,8 @@
             </div>
 
             <h3>تسجيل الدخول</h3>
-            <p>باستخدام حساب محلي</p>
 
-            <form id="account" method="post">
+            <form id="account" method="post" style="width:100%">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <input asp-for="Input.Email" placeholder="البريد الإلكتروني" />
@@ -29,25 +54,20 @@
 
                 <button type="submit">تسجيل الدخول</button>
             </form>
+
+            <a asp-page="./ForgotPassword"> 
+                <i class="bi bi-lock"></i> هل نسيت كلمة المرور؟
+
+            </a>
+
+            <a asp-page="./Register">
+                <i class="bi bi-person-plus"></i> إنشاء حساب جديد
+            </a>
         </div>
 
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
