@@ -115,7 +115,7 @@ namespace ornek.Controllers
             }
             return RedirectToAction("Index");
         }
-        // عرض تفاصيل خبر واحد مع كل صوره
+
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {

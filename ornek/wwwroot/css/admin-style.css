@@ -1,9 +1,11 @@
 ﻿:root {
-    --sidebar-bg: #1a1c2e;
-    --sidebar-hover: #252844;
-    --accent-color: #e63946;
-    --text-muted: #adb5bd;
-    --bg-light: #f8f9fa;
+    --sidebar-bg: #1e2a4a;
+    --sidebar-hover: rgba(255,255,255,0.08);
+    --blue-main: #2563eb;
+    --blue-light: #eff6ff;
+    --blue-dark: #1e2a4a;
+    --bg-light: #f4f6f9;
+    --text-muted: rgba(255,255,255,0.55);
 }
 
 .admin-container {
@@ -12,30 +14,302 @@
 }
 
 .admin-sidebar {
-    width: 260px;
-    background-color: var(--sidebar-bg);
+    width: 250px;
+    background: var(--sidebar-bg);
     color: white;
     position: sticky;
     top: 0;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
 }
 
-    .admin-sidebar a {
-        display: block;
-        color: var(--text-muted);
-        padding: 15px 25px;
-        text-decoration: none;
-        transition: all 0.3s;
+.sidebar-header {
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+    width: 42px;
+    height: 42px;
+    background: var(--blue-main);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.sidebar-subtitle {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.admin-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    padding: 11px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+    border-right: none;
+}
+
+    .admin-sidebar a:hover {
+        background: var(--sidebar-hover);
+        color: white;
+        border-right: none;
     }
 
-        .admin-sidebar a:hover {
-            background-color: var(--sidebar-hover);
-            color: white;
-            border-right: 4px solid var(--accent-color);
+    .admin-sidebar a.active {
+        background: var(--blue-main);
+        color: white;
+    }
+
+    .admin-sidebar a i {
+        width: 18px;
+        font-size: 16px;
+    }
+
+.sidebar-footer {
+    padding: 12px 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+    .sidebar-footer a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-muted);
+        padding: 11px 14px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+        .sidebar-footer a:hover {
+            background: rgba(239,68,68,0.15);
+            color: #fca5a5;
         }
 
 .admin-main-content {
     flex: 1;
-    padding: 40px;
-    background-color: var(--bg-light);
+    background: var(--bg-light);
+    padding: 28px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+}
+
+    .stat-icon.blue {
+        background: #2563eb;
+    }
+
+    .stat-icon.green {
+        background: #22c55e;
+    }
+
+    .stat-icon.orange {
+        background: #f59e0b;
+    }
+
+    .stat-icon.red {
+        background: #ef4444;
+    }
+
+.stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.admin-table-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+    margin-top: 24px;
+}
+
+.admin-table-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+    .admin-table-header h5 {
+        font-weight: 700;
+        color: var(--blue-dark);
+        margin: 0;
+    }
+
+.admin-table table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background: #f8fafc;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: right;
+}
+
+.admin-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #f8f8f8;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background: #fafbff;
+}
+
+.news-thumb {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.news-thumb-placeholder {
+    width: 60px;
+    height: 45px;
+    border-radius: 8px;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+}
+
+.badge-status {
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-published {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.badge-draft {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.badge-pending {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.badge-rejected {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.badge-category {
+    background: var(--blue-light);
+    color: var(--blue-main);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.btn-view {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.btn-delete {
+    background: #fff1f2;
+    color: #ef4444;
+}
+
+.btn-action:hover {
+    opacity: 0.75;
+    transform: scale(1.08);
 }

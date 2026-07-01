@@ -49,9 +49,10 @@ namespace ornek.Services
 
 
 
-        public void Create(News news, List<IFormFile>? images)
+        public void Create(News news, List<IFormFile>? images, string status = "Approved")
         {
             news.CreatedAt = DateTime.Now;
+            news.Status = status;
             _context.News.Add(news);
             _context.SaveChanges();
 

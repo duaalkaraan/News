@@ -1,5 +1,63 @@
 ﻿@model List<GetAllNewsDto>
 
+
+@{
+    var total = Model.Count;
+    var published = Model.Count(n => n.Status == "Published");
+    var drafts = Model.Count(n => n.Status == "Draft");
+    var pending = Model.Count(n => n.Status == "Pending");
+}
+<div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-newspaper"></i></div>
+            <div>
+                <div class="stat-value">@total</div>
+                <div class="stat-label">إجمالي الأخبار</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+            <div>
+                <div class="stat-value">@published</div>
+                <div class="stat-label">منشورة</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="fas fa-file-alt"></i></div>
+            <div>
+                <div class="stat-value">@drafts</div>
+                <div class="stat-label">مسودات</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon red"><i class="fas fa-paper-plane"></i></div>
+            <div>
+                <div class="stat-value">@pending</div>
+                <div class="stat-label">طلبات النشر</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="section-title mb-0">الأخبار</h2>
     <a asp-area="Admin" asp-controller="News" asp-action="Create" class="btn"

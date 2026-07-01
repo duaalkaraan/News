@@ -18,5 +18,6 @@ namespace ornek.Models
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
         public ICollection<NewsImage>? Images { get; set; }
+        public string Status { get; set; }
     }
 }

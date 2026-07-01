@@ -13,24 +13,29 @@
 </head>
 <body>
     <div class="admin-container">
-        <!-- القائمة الجانبية -->
         <nav class="admin-sidebar">
             <div class="text-center mb-4">
                 <h4>لوحة التحكم</h4>
                 <hr />
             </div>
-            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+           @*  <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
                 <i class="fas fa-home me-2"></i> الرئيسية
-            </a>
+            </a> *@
             <a asp-area="Admin" asp-controller="News" asp-action="Index">
                 <i class="fas fa-newspaper me-2"></i> إدارة الأخبار
             </a>
             <a asp-area="Admin" asp-controller="Category" asp-action="Index">
                 <i class="fas fa-tags me-2"></i> التصنيفات
             </a>
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-warning">
-                <i class="fas fa-arrow-right me-2"></i> الرئيسية
+            <a asp-area="Admin" asp-controller="NewsRequests" asp-action="Index">
+                <i class="fas fa-arrow-right me-2"></i> طلبات النشر
             </a>
+           
+            <div class="sidebar-footer">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </a>
+            </div>
         </nav>
 
         <main class="admin-main-content">

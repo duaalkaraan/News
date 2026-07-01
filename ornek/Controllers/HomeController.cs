@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ornek.Data;
+using ornek.Dtos;
+using ornek.Models;
+
 
 namespace ornek.Controllers
 {
@@ -8,8 +11,9 @@ namespace ornek.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var categories = await context.Categories
-                .Include(c => c.NewsList.OrderByDescending(n => n.CreatedAt)).ThenInclude(n => n.Images)
+            List<Category> categories = await context.Categories
+                .Include(c => c.NewsList.OrderByDescending(n => n.CreatedAt))
+                .ThenInclude(n => n.Images)
                 .ToListAsync();
 
             return View(categories);

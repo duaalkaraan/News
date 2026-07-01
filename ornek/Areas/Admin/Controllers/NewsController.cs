@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ornek.IServices;
 using ornek.Models;
 using ornek.Services;
@@ -6,6 +7,7 @@ using ornek.ViewModels;
 
 namespace ornek.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
  
     public class NewsController : Controller
