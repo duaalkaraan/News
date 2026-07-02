@@ -103,5 +103,7 @@ namespace ornek.Areas.Admin.Controllers
             _newsService.Delete(id);
             return RedirectToAction("Index");
         }
+
+
     }
 }

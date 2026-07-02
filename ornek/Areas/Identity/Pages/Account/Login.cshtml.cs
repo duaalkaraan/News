@@ -115,6 +115,15 @@ namespace ornek.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                        return RedirectToAction("Index", "News", new { area = "Admin" });
+
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Editor"))
+                        return RedirectToAction("Index", "Editor", new { area = "" });
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

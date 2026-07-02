@@ -18,23 +18,94 @@ namespace ornek.Services
          
        public List<GetAllNewsDto> GetAllNews()
         {
-            return _context.News.Include(n=> n.Category).Include(n => n.Images)
+            return _context.News.Where(x => x.Status == "Published").Include(n=> n.Category).Include(n => n.Images)
                 .Select(x=> new GetAllNewsDto
+                {
+
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(x=> x.ImagePath).ToList(),
+                    Status = x.Status ?? "Draft"
+                })
+                .ToList();
+
+        }
+
+        public List<GetAllNewsDto> GetPendingNews()
+        {
+            return _context.News
+                .Where(x => x.Status == "Pending")
+                .Include(n => n.Category)
+                .Include(n => n.Images)
+                .Select(x => new GetAllNewsDto
                 {
                     Id = x.Id,
                     Title = x.Title,
                     Content = x.Content,
                     CreatedAt = x.CreatedAt,
                     CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
-                    Images = x.Images!.Select(x=> x.ImagePath).ToList()
+                    Images = x.Images!.Select(i => i.ImagePath).ToList(),
+                    Status = x.Status
                 })
                 .ToList();
-
         }
-         public News? GetById(int id)
+
+        public List<GetAllNewsDto> GetEditorNews(string editorId)
+        {
+            return _context.News
+                .Where(x => x.CreatedById == editorId)
+                .Include(n => n.Category)
+                .Include(n => n.Images)
+                .Select(x => new GetAllNewsDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(i => i.ImagePath).ToList(),
+                    Status = x.Status
+                })
+                .ToList();
+        }
+
+
+        public void UpdateStatus(int id, string status)
+        {
+            var news = GetById(id);
+            if (news != null)
+            {
+                news.Status = status;
+                _context.SaveChanges();
+            }
+        }
+        public News? GetById(int id)
         {
             return  _context.News.Include(n=> n.Category).Include(n=> n.Images).FirstOrDefault(n=> n.Id == id);
 
+        }
+
+        public List<GetAllNewsDto> Search(string q)
+        {
+            return _context.News
+                .Where(x => x.Status == "Published" &&
+                       (x.Title.Contains(q) || x.Content.Contains(q)))
+                .Include(n => n.Category)
+                .Include(n => n.Images)
+                .Select(x => new GetAllNewsDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(i => i.ImagePath).ToList(),
+                    Status = x.Status
+                })
+                .ToList();
         }
 
         public void Delete(int id)
@@ -105,11 +176,42 @@ namespace ornek.Services
 
 
             }
-
-
         }
 
+        public void CreateFromDto(CreateNewsDto dto, string createdById)
+        {
+            var news = new News
+            {
+                Title = dto.Title,
+                Content = dto.Content,
+                CategoryId = dto.CategoryId,
+                CreatedAt = DateTime.Now,
+                Status = "Pending",
+                CreatedById = createdById
+            };
 
+            _context.News.Add(news);
+            _context.SaveChanges();
+
+            if (dto.Images != null)
+            {
+                foreach (var image in dto.Images)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    var path = Path.Combine("wwwroot/images/news", fileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        image.CopyTo(stream);
+                    }
+                    _context.NewsImages.Add(new NewsImage
+                    {
+                        ImagePath = "/images/news/" + fileName,
+                        NewsId = news.Id
+                    });
+                }
+                _context.SaveChanges();
+            }
+        }
 
 
     }

@@ -1,4 +1,54 @@
-﻿@{
+﻿@model List<ornek.Dtos.News.GetAllNewsDto>
 
-    ViewData["Title"] =  "Editor";
+
+@{
+    ViewData["Title"] = "لوحة الكاتب";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">اخباري</h2>
+    <a asp-action="Create" class="btn"
+           style="background-color: var(--blue-main); color: white; border-radius: 8px;">
+         نشر خبر جديد
+    </a>
+</div>
+
+
+@if (!Model.Any())
+{
+    <p class="text-muted">لايوحد اخبار بعد</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>العنوان</th>
+                <th>التصنيف</th>
+                <th>التاريخ</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var news in Model)
+            {
+                <tr>
+                    <td>@news.Title</td>
+                    <td>@news.CategoryName</td>
+                    <td>@news.CreatedAt.ToShortDateString()</td>
+                    <td>
+                        <span class="badge" style="background-color: @(news.Status == "Published" ? "green" : news.Status == "Pending" ? "orange" : "red")">
+                            @news.Status
+                        </span>
+                    
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@news.Id" class="btn btn-sm btn-primary">تعديل</a>
+                        <a asp-action="Delete" asp-route-id="@news.Id" class="btn btn-sm btn-danger">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

@@ -102,9 +102,29 @@
 <body>
 
 <nav class="navbar navbar-expand-lg px-4">
-    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-        ornek
-    </a>
+   
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">الرئيسية</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#سياسة">سياسة</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#رياضة">رياضة</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#تقنية">تقنية</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#اقتصاد">اقتصاد</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#ترفيه">ترفيه</a>
+            </li>
+        </ul>
+
+
 
     <button class="navbar-toggler" type="button"
             data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -114,7 +134,22 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">الرئيسية</a>
+                   
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="News" asp-action="Index">لوحة التحكم</a>
+                        </li>
+                    }
+
+
+                    @if (User.IsInRole("Editor"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Editor" asp-action="Index">نشر خبر</a>
+                        </li>
+                    }
 
             </li>
         </ul>

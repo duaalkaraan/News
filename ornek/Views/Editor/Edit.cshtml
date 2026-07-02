@@ -1,0 +1,33 @@
+﻿@model ornek.ViewModels.NewsViewModel
+
+<div class="card shadow-sm">
+    <div class="card-header bg-warning">
+        <h5 class="mb-0">تعديل </h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="News.Id" />
+            <div class="mb-3">
+                <label asp-for="News.Title" class="form-label">العنوان</label>
+                <input asp-for="News.Title" class="form-control" />
+                <span asp-validation-for="News.Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="News.Content" class="form-label">المحتوى</label>
+                <textarea asp-for="News.Content" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="News.Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="News.CategoryId" class="form-label">التصنيف</label>
+                <select asp-for="News.CategoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))"></select>
+                <span asp-validation-for="News.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">الصور</label>
+                <input type="file" name="Images" multiple class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-warning">حفظ</button>
+            <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+        </form>
+    </div>
+</div>

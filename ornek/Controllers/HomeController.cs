@@ -12,7 +12,9 @@ namespace ornek.Controllers
         public async Task<IActionResult> Index()
         {
             List<Category> categories = await context.Categories
-                .Include(c => c.NewsList.OrderByDescending(n => n.CreatedAt))
+                .Include(c => c.NewsList
+                .Where(n => n.Status == "Published")
+                .OrderByDescending(n => n.CreatedAt))
                 .ThenInclude(n => n.Images)
                 .ToListAsync();
 

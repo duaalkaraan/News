@@ -1,0 +1,72 @@
+﻿@model List<ornek.Dtos.News.GetAllNewsDto>
+
+<h2 class="section-title mb-4">طلبات النشر</h2>
+
+@if (!Model.Any())
+{
+    <div class="admin-table-card p-4 text-center text-muted">
+        <i class="fas fa-inbox fa-2x mb-2"></i>
+        <p class="mb-0">لا يوجد طلبات معلقة</p>
+    </div>
+}
+else
+{
+    <div class="admin-table-card">
+        <div class="admin-table-header">
+            <h5>الطلبات المعلقة</h5>
+            <span class="badge-status badge-pending">@Model.Count طلب</span>
+        </div>
+
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الصورة</th>
+                        <th>العنوان</th>
+                        <th>التصنيف</th>
+                        <th>التاريخ</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var news in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (news.Images != null && news.Images.Any())
+                                {
+                                    <img src="@news.Images.First()" class="news-thumb" />
+                                }
+                                else
+                                {
+                                    <div class="news-thumb-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td style="font-weight:600;color:#1e293b">@news.Title</td>
+                            <td><span class="badge-category">@news.CategoryName</span></td>
+                            <td style="color:#6b7280;font-size:13px">
+                                @news.CreatedAt.ToString("dd.MM.yyyy")
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a asp-action="Approve" asp-route-id="@news.Id"
+                                           class="btn btn-sm"
+                                           style="background:#dcfce7;color:#16a34a;border-radius:8px;font-weight:600">
+                                        <i class="fas fa-check"></i> قبول
+                                    </a>
+                                    <a asp-action="Reject" asp-route-id="@news.Id"
+                                           class="btn btn-sm"
+                                           style="background:#fee2e2;color:#dc2626;border-radius:8px;font-weight:600">
+                                        <i class="fas fa-times"></i> رفض
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
