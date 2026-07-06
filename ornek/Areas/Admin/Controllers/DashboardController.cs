@@ -18,7 +18,8 @@ namespace ornek.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.NewsCount = _newsService.GetAllNews().Count;
+            ViewBag.NewsCount = _newsService.GetAllNews().PublishedNewsCount;
+                ;
             ViewBag.CategoryCount = 0; //(categoryService.GetAllCategories()).Count;
             return View();
         }

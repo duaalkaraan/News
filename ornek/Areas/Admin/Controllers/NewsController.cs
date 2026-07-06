@@ -29,6 +29,7 @@ namespace ornek.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var news = _newsService.GetAllNews();
+
             return View(news);
             
         }

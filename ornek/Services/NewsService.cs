@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ornek.Areas.Admin.Dtos.News;
 using ornek.Data;
 using ornek.Dtos.News;
 using ornek.Models;
@@ -16,9 +17,9 @@ namespace ornek.Services
             _context = context;
         }
          
-       public List<GetAllNewsDto> GetAllNews()
+       public GetAlllNewsWithStatistics GetAllNews()
         {
-            return _context.News.Where(x => x.Status == "Published").Include(n=> n.Category).Include(n => n.Images)
+            var newsList = _context.News.Where(x => x.Status == "Published").Include(n=> n.Category).Include(n => n.Images)
                 .Select(x=> new GetAllNewsDto
                 {
 
@@ -31,7 +32,21 @@ namespace ornek.Services
                     Status = x.Status ?? "Draft"
                 })
                 .ToList();
+            var rejectedNews = _context.News.Where(x => x.Status == "Rejected").Count();
+            var pendingNews = _context.News.Where(x => x.Status == "Pending").Count();
+            var publishedNews = _context.News.Where(x => x.Status == "Published").Count();
+            var categoryCount = _context.Categories.Count();
+            var totalCount = _context.News.Count();
 
+            return new()
+            {
+                PublishedNewsList = newsList,
+                RejectedNewsCount = rejectedNews,
+                PendingNewsCount = pendingNews,
+                PublishedNewsCount = publishedNews,
+                CategoryCount = categoryCount,
+                TotalCount = totalCount
+            };
         }
 
         public List<GetAllNewsDto> GetPendingNews()
