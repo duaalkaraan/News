@@ -2,6 +2,7 @@
 using ornek.Areas.Admin.Dtos.News;
 using ornek.Data;
 using ornek.Dtos.News;
+using ornek.Helpers;
 using ornek.Models;
 
 
@@ -12,26 +13,53 @@ namespace ornek.Services
     {
         private readonly AppDbContext _context;
        
-        public NewsService(AppDbContext context)        //dependency injection
+        public NewsService(AppDbContext context)        
         {
             _context = context;
         }
          
-       public GetAlllNewsWithStatistics GetAllNews()
+       public async Task<GetAlllNewsWithStatistics> GetAllNews(string q, int pageIndex = 1)
         {
-            var newsList = _context.News.Where(x => x.Status == "Published").Include(n=> n.Category).Include(n => n.Images)
-                .Select(x=> new GetAllNewsDto
-                {
+            int pageSize = 10;
 
-                    Id = x.Id,
-                    Title = x.Title,
-                    Content = x.Content,
-                    CreatedAt = x.CreatedAt,
-                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
-                    Images = x.Images!.Select(x=> x.ImagePath).ToList(),
-                    Status = x.Status ?? "Draft"
-                })
-                .ToList();
+
+            var query = _context.News
+                .Where(x => x.Status == "Published")
+                .Include(n => n.Category).Include(n => n.Images)
+                .AsQueryable()
+                .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Title, $"%{q}%"));
+            }
+
+            var dtoQuery = query.Select(x => new GetAllNewsDto
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Content = x.Content,
+                CreatedAt = x.CreatedAt,
+                CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                Images = x.Images!.Select(x => x.ImagePath).ToList(),
+                Status = x.Status ?? "Draft"
+            });
+            var paginatedValues = await PaginatedList<GetAllNewsDto>.CreateAsync(dtoQuery, pageIndex, pageSize);
+
+
+            //var values =await query.Select(x=> new GetAllNewsDto
+            //    {
+
+            //        Id = x.Id,
+            //        Title = x.Title,
+            //        Content = x.Content,
+            //        CreatedAt = x.CreatedAt,
+            //        CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+            //        Images = x.Images!.Select(x=> x.ImagePath).ToList(),
+            //        Status = x.Status ?? "Draft"
+            ////    })
+            //    .ToListAsync();
+
             var rejectedNews = _context.News.Where(x => x.Status == "Rejected").Count();
             var pendingNews = _context.News.Where(x => x.Status == "Pending").Count();
             var publishedNews = _context.News.Where(x => x.Status == "Published").Count();
@@ -40,7 +68,7 @@ namespace ornek.Services
 
             return new()
             {
-                PublishedNewsList = newsList,
+                PublishedNewsList = paginatedValues,
                 RejectedNewsCount = rejectedNews,
                 PendingNewsCount = pendingNews,
                 PublishedNewsCount = publishedNews,
@@ -103,13 +131,21 @@ namespace ornek.Services
 
         }
 
-        public List<GetAllNewsDto> Search(string q)
+        public async Task<List<GetAllNewsDto>> Search(string q)
         {
-            return _context.News
-                .Where(x => x.Status == "Published" &&
-                       (x.Title.Contains(q) || x.Content.Contains(q)))
+            var query = _context.News
+                .Where(x => x.Status == "Published")
                 .Include(n => n.Category)
-                .Include(n => n.Images)
+                .Include(n => n.Images).AsQueryable().AsNoTracking();
+            if (!string.IsNullOrEmpty(q))
+            {
+                query = query.Where(x=>EF.Functions.Like(x.Title,$"%{q}%") || EF.Functions.Like(x.Content, $"%{q}%"));
+            }
+            else
+            {
+                return new();
+            }
+            var values = await query
                 .Select(x => new GetAllNewsDto
                 {
                     Id = x.Id,
@@ -120,7 +156,8 @@ namespace ornek.Services
                     Images = x.Images!.Select(i => i.ImagePath).ToList(),
                     Status = x.Status
                 })
-                .ToList();
+                .ToListAsync();
+            return values;
         }
 
         public void Delete(int id)
@@ -135,7 +172,7 @@ namespace ornek.Services
 
 
 
-        public void Create(News news, List<IFormFile>? images, string status = "Approved")
+        public void Create(News news, List<IFormFile>? images, string status = "Published")
         {
             news.CreatedAt = DateTime.Now;
             news.Status = status;
@@ -227,7 +264,51 @@ namespace ornek.Services
                 _context.SaveChanges();
             }
         }
+        public List<GetAllNewsDto> SearchAdmin(string q)
+        {
+            return _context.News
+                .Where(x => x.Title.Contains(q) || x.Content.Contains(q))
+                .Include(n => n.Category)
+                .Include(n => n.Images)
+                .Select(x => new GetAllNewsDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(i => i.ImagePath).ToList(),
+                    Status = x.Status
+                })
+                .ToList();
+        }
 
+        public async Task<List<GetAllNewsDto>> GetLatestNews(int count)
+        {
+            var query = _context.News
+                .Where(x => x.Status == "Published")
+                .Include(n => n.Category)
+                .Include(n => n.Images)
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(count)
+                .AsQueryable()
+                .AsNoTracking();
+
+            var values = await query
+                .Select(x => new GetAllNewsDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreatedAt = x.CreatedAt,
+                    CategoryName = x.Category != null ? x.Category.Name : "بدون تصنيف",
+                    Images = x.Images!.Select(i => i.ImagePath).ToList(),
+                    Status = x.Status
+                })
+                .ToListAsync();
+
+            return values;
+        }
 
     }
 }

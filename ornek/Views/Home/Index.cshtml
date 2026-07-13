@@ -59,6 +59,46 @@
 </div>
 
 
+<div class="container my-5">
+    <h4 class="section-title">اخر الأخبار</h4>
+
+    @{
+        var latestNews = ViewData["LatestNews"] as List<ornek.Dtos.News.GetAllNewsDto>;
+    }
+
+    @if (latestNews != null && latestNews.Any())
+    {
+        <div class="latest-posts-wrapper">
+
+            
+
+            <div class="latest-posts-list" >
+                @foreach (var news in latestNews)
+                {
+                    <a asp-controller="News" asp-action="Details"
+                           asp-route-id="@news.Id"
+                           class="latest-post-item">
+
+                        @if (news.Images != null && news.Images.Any())
+                        {
+                            <img src="@news.Images.First()" class="latest-post-img" alt="@news.Title" />
+                        }
+
+                        <div class="latest-post-content">
+                            <span class="latest-post-tag">@news.CategoryName</span>
+                            <div class="latest-post-title">@news.Title</div>
+                            <div class="latest-post-date">@news.CreatedAt.ToString("dd/MM/yyyy")</div>
+                        </div>
+                    </a>
+                }
+            </div>
+
+
+        </div>
+    }
+</div>
+
+
 
 <div class="container my-5">
     <h4 class="section-title">الأخبار حسب التصنيف</h4>

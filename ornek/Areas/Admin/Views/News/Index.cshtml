@@ -46,20 +46,25 @@
 
 
 
-
-
-
-
-
+<form asp-area="Admin" asp-controller="News" asp-action="Index" method="get" class="d-flex mb-3">
+    <input type="text" name="q" value="@Context.Request.Query["q"]" class="form-control me-2"
+           placeholder="ابحث عن خبر" style="width:300px;" />
+    <button type="submit" class="btn"
+            style="background-color: var(--blue-main); color:white;">
+        <i class="fas fa-search"></i> بحث
+    </button>
+</form>
 
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="section-title mb-0">الأخبار</h2>
+
     <a asp-area="Admin" asp-controller="News" asp-action="Create" class="btn"
            style="background-color: var(--blue-main); color: white; border-radius: 8px; font-weight: 600;">
         + إضافة خبر جديد
     </a>
 </div>
+
 
 @* <table class="table table-bordered table-hover">
     <thead class="table-dark">
@@ -159,7 +164,7 @@
                         }
                     </td>
                     <td>
-                        <span class="badge" style="background-color: @(news.Status == "Approved" ? "green" : news.Status == "Pending" ? "orange" : "red")">
+                        <span class="badge" style="background-color: @(news.Status == "Approved" ? "red" : news.Status == "Pending" ? "orange" : "green")">
                             @news.Status
                         </span>
                     </td>
@@ -176,6 +181,34 @@
         </tbody>
     </table>
 </div>
+
+<div class="mt-4 d-flex justify-content-center gap-2">
+
+@if (Model.PublishedNewsList.HasPreviousPage)
+{
+        <a asp-action="Index" asp-route-q="@Context.Request.Query["q"]" asp-route-pageIndex="@(Model.PublishedNewsList.PageIndex - 1)" class="btn btn-secondary">
+            السابق
+        </a>
+}
+
+@for (int i = 1; i <= Model.PublishedNewsList.TotalPages; i++)
+{
+        <a asp-action="Index" asp-route-q="@Context.Request.Query["q"]" asp-route-pageIndex="@i"
+               class="btn @(i == Model.PublishedNewsList.PageIndex ? "btn-primary" : "btn-outline-secondary")">
+            @i
+        </a>
+}
+
+@if (Model.PublishedNewsList.HasNextPage)
+{
+        <a asp-action="Index" asp-route-q="@Context.Request.Query["q"]" asp-route-pageIndex="@(Model.PublishedNewsList.PageIndex + 1)" class="btn btn-secondary">
+            التالي
+        </a>
+}
+
+</div>
+
+
 
 @foreach (var news in Model.PublishedNewsList)
 {

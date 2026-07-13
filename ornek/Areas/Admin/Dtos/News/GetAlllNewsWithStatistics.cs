@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.RateLimiting;
 using ornek.Dtos.News;
+using ornek.Helpers;
 
 namespace ornek.Areas.Admin.Dtos.News
 {
     public class GetAlllNewsWithStatistics
     {
-        public List<GetAllNewsDto> PublishedNewsList{ get; set; }
+        public PaginatedList<GetAllNewsDto>? PublishedNewsList{ get; set; }
         public int CategoryCount { get; set; }
         public int PendingNewsCount { get; set; }
         public int PublishedNewsCount { get; set; }

@@ -38,7 +38,7 @@ namespace ornek.Areas.Admin.Controllers
             return View(userRolesViewModelList);
         }
         
-        public async Task<IActionResult> Manage(string userId)
+        public async Task<IActionResult> ManageRole(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if(user == null)
@@ -72,7 +72,7 @@ namespace ornek.Areas.Admin.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
+        public async Task<IActionResult> ManageRole(List<ManageUserRolesViewModel> model, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if(user == null)
@@ -94,8 +94,7 @@ namespace ornek.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-
-
+        
 
 
 

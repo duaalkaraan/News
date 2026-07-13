@@ -26,9 +26,9 @@ namespace ornek.Areas.Admin.Controllers
 
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string q, int pageIndex = 1)
         {
-            var news = _newsService.GetAllNews();
+            var news =await _newsService.GetAllNews(q, pageIndex);
 
             return View(news);
             
@@ -105,6 +105,12 @@ namespace ornek.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public IActionResult Search(string q)
+        {
+            var results = _newsService.SearchAdmin(q);
+            return View("Index", results);
+        }
 
     }
 }
